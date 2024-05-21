@@ -6,7 +6,7 @@
 /*   By: fmorra <fmorra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 17:33:11 by fmorra            #+#    #+#             */
-/*   Updated: 2024/05/21 17:54:35 by fmorra           ###   ########.fr       */
+/*   Updated: 2024/05/21 18:15:27 by fmorra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,4 +125,28 @@ char	*ft_strjoin(char *s1, char *s2, size_t size)
 	ft_strlcpy(res, s1, ft_strlen(s1) + 1);
 	ft_strlcat(res, s2, ft_strlen(s1) + backslashn(s2) + 2);
 	return (res);
+}
+
+char	*ft_substr(char *s, unsigned int start, size_t len)
+{
+	char			*str;
+	size_t			i;
+	unsigned int	j;
+
+	if (!s)
+		return (NULL);
+	if (start >= ft_strlen(s))
+		return (ft_strdup(""));
+	if (len > ft_strlen(s) - start)
+		len = ft_strlen(s) - start;
+	str = ft_calloc(len + 1, sizeof(char));
+	i = 0;
+	j = start;
+	while (i < len && s[j])
+	{
+		str[i] = s[j];
+		i++;
+		j++;
+	}
+	return (str);
 }

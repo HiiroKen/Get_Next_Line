@@ -6,7 +6,7 @@
 /*   By: fmorra <fmorra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 17:33:14 by fmorra            #+#    #+#             */
-/*   Updated: 2024/05/21 17:38:27 by fmorra           ###   ########.fr       */
+/*   Updated: 2024/05/21 18:11:12 by fmorra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ size_t	backslashn(char *s);
 
 void	*ft_calloc(size_t nmemb, size_t size);
 char	*ft_strjoin(char *s1, char *s2, size_t size);
+char	*ft_substr(char *s, unsigned int start, size_t len);
 
 #endif
