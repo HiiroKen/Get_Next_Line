@@ -6,7 +6,7 @@
 /*   By: fmorra <fmorra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:38:30 by fmorra            #+#    #+#             */
-/*   Updated: 2024/05/21 17:33:05 by fmorra           ###   ########.fr       */
+/*   Updated: 2024/05/21 17:52:07 by fmorra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ char *get_next_line(int fd)
     read(fd, next, BUFFER_SIZE);
     while (backslashn(next) == BUFFER_SIZE)
     {
-        line = ft_strjoin(line, next);
+        line = ft_strjoin(line, next, BUFFER_SIZE);
         read(fd, next, BUFFER_SIZE);
     }
-    line = ft_strjoin(line, next);
+    line = ft_strjoin(line, next, backslashn(next) + ft_strlen(line) + 2);
     printf("%s", line);
     return (next);
 }

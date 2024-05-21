@@ -6,7 +6,7 @@
 /*   By: fmorra <fmorra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 17:33:11 by fmorra            #+#    #+#             */
-/*   Updated: 2024/05/21 17:30:53 by fmorra           ###   ########.fr       */
+/*   Updated: 2024/05/21 17:54:35 by fmorra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static char	*ft_strdup(char *s)
 	int		i;
 	char	*d;
 
-	i = ft_strlen(s) + 1;
+	i = backslashn(s) + 2;
 	d = malloc(sizeof(char) * i);
 	ft_strlcpy(d, s, i);
 	return (d);
@@ -111,7 +111,7 @@ static size_t	ft_strlcat(char *dst, char *src, size_t size)
 	return (i + ft_strlen(src));
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *s1, char *s2, size_t size)
 {
 	char	*res;
 
@@ -123,6 +123,6 @@ char	*ft_strjoin(char *s1, char *s2)
 		return (ft_strdup(s1));
 	res = ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 1, sizeof(char));
 	ft_strlcpy(res, s1, ft_strlen(s1) + 1);
-	ft_strlcat(res, s2, ft_strlen(s1) + ft_strlen(s2) + 1);
+	ft_strlcat(res, s2, ft_strlen(s1) + backslashn(s2) + 2);
 	return (res);
 }
