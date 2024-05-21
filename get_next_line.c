@@ -6,7 +6,7 @@
 /*   By: fmorra <fmorra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:38:30 by fmorra            #+#    #+#             */
-/*   Updated: 2024/05/21 18:38:27 by fmorra           ###   ########.fr       */
+/*   Updated: 2024/05/21 18:49:36 by fmorra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char *get_next_line(int fd)
 {
     static char *next;
     char        *line;
+    int         daer;
 
     //printf("%s\n", next);
     line = NULL;
@@ -25,13 +26,14 @@ char *get_next_line(int fd)
         next = malloc(sizeof(char) * (BUFFER_SIZE +1));
     else
         line = ft_strjoin(line, next, BUFFER_SIZE);
-    read(fd, next, BUFFER_SIZE);
-    while (backslashn(next) == BUFFER_SIZE)
+    daer = read(fd, next, BUFFER_SIZE);
+    while (backslashn(next) == BUFFER_SIZE && daer != 0 && daer != -1)
     {
         line = ft_strjoin(line, next, BUFFER_SIZE);
-        read(fd, next, BUFFER_SIZE);
+        daer = read(fd, next, BUFFER_SIZE);
     }
-    line = ft_strjoin(line, next, backslashn(next) + ft_strlen(line) + 2);
+    if (daer != 0 && daer != -1)
+        line = ft_strjoin(line, next, backslashn(next) + ft_strlen(line) + 2);
     next = ft_substr(next, backslashn(next) + 1, BUFFER_SIZE);
     //printf("%s\n", next);
     return (line);
@@ -41,18 +43,8 @@ int main(void)
 {
     int fd;
     char    *line;
-    
     fd = open("fd.txt", O_RDONLY);
-    line = get_next_line(fd);
-    printf("%s", line);
-    line = get_next_line(fd);
-    printf("%s", line);
-    line = get_next_line(fd);
-    printf("%s", line);
-    line = get_next_line(fd);
-    printf("%s", line);
-    line = get_next_line(fd);
-    printf("%s", line);
-    line = get_next_line(fd);
-    printf("%s", line);
+    for (int i = 0; i < 5; i++)
+        printf("%s",get_next_line(fd));
+   close(fd);
 }
