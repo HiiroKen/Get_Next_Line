@@ -6,7 +6,7 @@
 /*   By: fmorra <fmorra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:38:30 by fmorra            #+#    #+#             */
-/*   Updated: 2024/05/21 18:49:36 by fmorra           ###   ########.fr       */
+/*   Updated: 2024/05/22 18:23:46 by fmorra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,23 @@ char *get_next_line(int fd)
     if (!next)
         next = malloc(sizeof(char) * (BUFFER_SIZE +1));
     else
-        line = ft_strjoin(line, next, BUFFER_SIZE);
+    {
+        line = ft_strjoin(line, next);
+        printf("\n|line:%s|\n", next);
+    }
     ft_bzero(next, BUFFER_SIZE);
     daer = read(fd, next, BUFFER_SIZE);
     while (backslashn(next) == BUFFER_SIZE && daer == BUFFER_SIZE && daer != -1)
     {
-        line = ft_strjoin(line, next, BUFFER_SIZE);
+        line = ft_strjoin(line, next);
         ft_bzero(next, BUFFER_SIZE);
         daer = read(fd, next, BUFFER_SIZE);
     }
     if (daer != 0 && daer != -1)
-        line = ft_strjoin(line, next, backslashn(next) + ft_strlen(line) + 2);
-    //printf("\n|before:%s|\n", next);
+        line = ft_strjoin(line, next);
+    printf("\n|before:%s|\n", next);
     next = ft_substr(next, backslashn(next) + 1, BUFFER_SIZE);
-    //printf("\n|after:%s|\n", next);
+    printf("\n|after:%s|\n", next);
     return (line);
 }
 
@@ -56,7 +59,6 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 int main(int argc, char *argv[])
 {
     int     fd;
-    char    *line;
     char    *erreur = "erreur.txt";
     char    *fdt = "fd.txt";
     int     nbr;

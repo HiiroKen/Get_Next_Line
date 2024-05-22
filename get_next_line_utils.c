@@ -6,7 +6,7 @@
 /*   By: fmorra <fmorra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 17:33:11 by fmorra            #+#    #+#             */
-/*   Updated: 2024/05/21 18:15:27 by fmorra           ###   ########.fr       */
+/*   Updated: 2024/05/22 16:30:25 by fmorra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,20 @@ size_t	backslashn(char *s)
 	while (s[i] && s[i] != '\n')
 		i++;
 	return (i);
+}
+
+size_t	check(char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == '\n')
+			return(1);
+		i++;
+	}
+	return(0);
 }
 
 void	ft_bzero(void *s, size_t n)
@@ -111,7 +125,7 @@ static size_t	ft_strlcat(char *dst, char *src, size_t size)
 	return (i + ft_strlen(src));
 }
 
-char	*ft_strjoin(char *s1, char *s2, size_t size)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*res;
 
