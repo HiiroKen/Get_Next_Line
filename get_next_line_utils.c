@@ -32,7 +32,7 @@ size_t	backslashn(char *s)
 	return (i);
 }
 
-static void	ft_bzero(void *s, size_t n)
+void	ft_bzero(void *s, size_t n)
 {
 	size_t	i;
 	char	*str;
