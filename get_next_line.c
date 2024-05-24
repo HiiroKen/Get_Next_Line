@@ -23,11 +23,14 @@ char *get_next_line(int fd)
     line = NULL;
     if (!next)
         next = malloc(sizeof(char) * (BUFFER_SIZE +1));
-    else
+    else if (backslashn(next) != ft_strlen(next))
     {
         line = ft_strjoin(line, next);
-        printf("\n|line:%s|\n", next);
+        next = ft_substr(next, backslashn(next) + 1, BUFFER_SIZE);
+        return (line);
     }
+    else
+        line = ft_strjoin(line, next);
     ft_bzero(next, BUFFER_SIZE);
     daer = read(fd, next, BUFFER_SIZE);
     while (backslashn(next) == BUFFER_SIZE && daer == BUFFER_SIZE && daer != -1)
@@ -38,9 +41,7 @@ char *get_next_line(int fd)
     }
     if (daer != 0 && daer != -1)
         line = ft_strjoin(line, next);
-    printf("\n|before:%s|\n", next);
     next = ft_substr(next, backslashn(next) + 1, BUFFER_SIZE);
-    printf("\n|after:%s|\n", next);
     return (line);
 }
 
@@ -59,20 +60,9 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 int main(int argc, char *argv[])
 {
     int     fd;
-    char    *erreur = "erreur.txt";
-    char    *fdt = "fd.txt";
-    int     nbr;
 
-    nbr = 0;
-    if (argc == 2)
-    {
-        fd = open(argv[1], O_RDONLY);
-        if (strncmp(argv[1], erreur, ft_strlen(erreur)) == 0)
-            nbr = 4;
-        else if (strncmp(argv[1], fdt, ft_strlen(fdt)) == 0)
-            nbr = 296;
-        for (int i = 0; i < nbr; i++)
-            printf("%s",get_next_line(fd));
-        close(fd);
-    }
+    fd = open(argv[1], O_RDONLY);
+    for (int i = 0; i < 340; i++)
+        printf("%s",get_next_line(fd));
+    close(fd);
 }
