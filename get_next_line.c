@@ -6,7 +6,7 @@
 /*   By: fmorra <fmorra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:38:30 by fmorra            #+#    #+#             */
-/*   Updated: 2024/05/24 12:28:41 by fmorra           ###   ########.fr       */
+/*   Updated: 2024/05/24 15:42:11 by fmorra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char *get_next_line(int fd)
     line = NULL;
     if (!next)
         next = ft_calloc(sizeof(char), (BUFFER_SIZE +1));
-    else if (backslashn(next) != ft_strlen(next))
+    if (backslashn(next) != ft_strlen(next))
     {
         line = ft_strjoin(line, next);
         next = ft_substr(next, backslashn(next) + 1, BUFFER_SIZE);
@@ -31,12 +31,12 @@ char *get_next_line(int fd)
     }
     else
         line = ft_strjoin(line, next);
-    ft_bzero(next, BUFFER_SIZE);
+    next[0] = '\0';
     daer = read(fd, next, BUFFER_SIZE);
     while (backslashn(next) == BUFFER_SIZE && daer == BUFFER_SIZE && daer != -1)
     {
         line = ft_strjoin(line, next);
-        ft_bzero(next, BUFFER_SIZE);
+        next[0] = '\0';
         daer = read(fd, next, BUFFER_SIZE);
     }
     if (daer != 0 && daer != -1)
@@ -57,7 +57,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (s1[i] - s2[i]);
 }
 
-int main(int argc, char *argv[])
+/* int main(int argc, char *argv[])
 {
     int     fd;
     char    *line;
@@ -73,4 +73,4 @@ int main(int argc, char *argv[])
         }
         close(fd);
     }
-}
+} */
