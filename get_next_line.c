@@ -6,7 +6,7 @@
 /*   By: fmorra <fmorra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:38:30 by fmorra            #+#    #+#             */
-/*   Updated: 2024/05/24 15:42:11 by fmorra           ###   ########.fr       */
+/*   Updated: 2024/05/24 18:51:46 by fmorra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (s1[i] - s2[i]);
 }
 
-/* int main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
     int     fd;
     char    *line;
@@ -73,4 +73,4 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
         }
         close(fd);
     }
-} */
+}
