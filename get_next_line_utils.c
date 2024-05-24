@@ -6,7 +6,7 @@
 /*   By: fmorra <fmorra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 17:33:11 by fmorra            #+#    #+#             */
-/*   Updated: 2024/05/22 16:30:25 by fmorra           ###   ########.fr       */
+/*   Updated: 2024/05/24 12:33:21 by fmorra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_bzero(void *s, size_t n)
 
 	i = 0;
 	str = s;
-	while (i < n)
+	while (i < n && str[i])
 	{
 		str[i] = 0;
 		i++;
@@ -138,6 +138,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	res = ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 1, sizeof(char));
 	ft_strlcpy(res, s1, ft_strlen(s1) + 1);
 	ft_strlcat(res, s2, ft_strlen(s1) + backslashn(s2) + 2);
+	free(s1);
 	return (res);
 }
 
@@ -162,5 +163,6 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 		i++;
 		j++;
 	}
+	free(s);
 	return (str);
 }

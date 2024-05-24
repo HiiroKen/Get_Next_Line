@@ -6,7 +6,7 @@
 /*   By: fmorra <fmorra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:38:30 by fmorra            #+#    #+#             */
-/*   Updated: 2024/05/22 18:23:46 by fmorra           ###   ########.fr       */
+/*   Updated: 2024/05/24 12:28:41 by fmorra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char *get_next_line(int fd)
 
     line = NULL;
     if (!next)
-        next = malloc(sizeof(char) * (BUFFER_SIZE +1));
+        next = ft_calloc(sizeof(char), (BUFFER_SIZE +1));
     else if (backslashn(next) != ft_strlen(next))
     {
         line = ft_strjoin(line, next);
@@ -60,9 +60,17 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 int main(int argc, char *argv[])
 {
     int     fd;
+    char    *line;
 
-    fd = open(argv[1], O_RDONLY);
-    for (int i = 0; i < 340; i++)
-        printf("%s",get_next_line(fd));
-    close(fd);
+    if (argc > 1)
+    {
+        fd = open(argv[1], O_RDONLY);
+        for (int i = 0; i < 500; i++)
+        {
+            line = get_next_line(fd);
+            printf("%s",line);
+            free(line);
+        }
+        close(fd);
+    }
 }
