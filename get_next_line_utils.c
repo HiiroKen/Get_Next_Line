@@ -6,7 +6,7 @@
 /*   By: fmorra <fmorra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 17:33:11 by fmorra            #+#    #+#             */
-/*   Updated: 2024/05/24 18:19:44 by fmorra           ###   ########.fr       */
+/*   Updated: 2024/05/30 11:26:26 by fmorra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t	ft_strlen(char *s)
 	size_t	i;
 
 	i = 0;
-	while (s[i])
+	while (s && s[i])
 		i++;
 	return (i);
 }
@@ -26,24 +26,12 @@ size_t	backslashn(char *s)
 {
 	size_t	i;
 
+	if (!s)
+		return (0);
 	i = 0;
 	while (s[i] && s[i] != '\n')
 		i++;
 	return (i);
-}
-
-size_t	check(char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == '\n')
-			return(1);
-		i++;
-	}
-	return(0);
 }
 
 void	ft_bzero(void *s, size_t n)
@@ -73,71 +61,50 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	return (mem);
 }
 
-size_t	ft_strlcpy(char *dst, char *src, size_t size)
-{
-	size_t	i;
-	size_t	len;
-
-	len = 0;
-	while (src[len])
-		len++;
-	i = 0;
-	if (!size)
-		return (len);
-	while (src[i] && i < size - 1)
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (len);
-}
-
-static char	*ft_strdup(char *s)
+char	*ft_strdup(char *s)
 {
 	int		i;
+	int		j;
 	char	*d;
 
-	i = backslashn(s) + 2;
-	d = malloc(sizeof(char) * i);
-	ft_strlcpy(d, s, i);
+	if (!s)
+		return (NULL);
+	d = malloc(sizeof(char) * ft_strlen(s) + 1);
+	if (!d)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (s[i] && s[i] != '\n')
+	{
+		d[j] = s[i];
+		i++;
+		j++;
+	}
+	if (s[i] == '\n')
+		d[j++] = '\n';
+	d[j] = '\0';
 	return (d);
 }
 
-static size_t	ft_strlcat(char *dst, char *src, size_t size)
-{
-	size_t	i;
-	size_t	j;
-
-	if (size == 0)
-		return (ft_strlen(src));
-	i = 0;
-	while (dst[i] != '\0' && i < size)
-		i++;
-	j = i;
-	while (src[j - i] && j < size - 1)
-	{
-		dst[j] = src[j - i];
-		j++;
-	}
-	if (i < size)
-		dst[j] = '\0';
-	return (i + ft_strlen(src));
-}
-
-char	*ft_strjoin(char *s1, char *s2)
+/* char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*res;
 
-	if ((!s1 || ft_strlen(s1) == 0) && (!s2 || ft_strlen(s2) == 0))
-		return (ft_strdup(""));
-	else if (!s1 || ft_strlen(s1) == 0)
-		return (ft_strdup(s2));
-	else if (!s2 || ft_strlen(s2) == 0)
-		return (ft_strdup(s1));
-	res = ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 1, sizeof(char));
-	ft_strlcpy(res, s1, ft_strlen(s1) + 1);
-	ft_strlcat(res, s2, ft_strlen(s1) + backslashn(s2) + 2);
+	size_t	i;
+	size_t	j;
+
+	if (!s1 && !s2)
+		return (NULL);
+	i = 0;
+	j = 0;
+	res = ft_calloc(sizeof(char), (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!res)
+		return (NULL);
+	while (s1 && s1[i])
+		res[j++] = s1[i++];
+	i = 0;
+	while (s2[i] && i <= backslashn(s2))
+		res[j++] = s2[i++];
 	free(s1);
 	return (res);
 }
@@ -151,7 +118,10 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	if (!s)
 		return (NULL);
 	if (start >= ft_strlen(s))
-		return (ft_strdup(""));
+	{
+		free(s);
+		return ft_strdup("");
+	}
 	if (len > ft_strlen(s) - start)
 		len = ft_strlen(s) - start;
 	str = ft_calloc(len + 1, sizeof(char));
@@ -165,4 +135,4 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	}
 	free(s);
 	return (str);
-}
+} */

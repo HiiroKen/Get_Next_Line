@@ -6,7 +6,7 @@
 /*   By: fmorra <fmorra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:38:30 by fmorra            #+#    #+#             */
-/*   Updated: 2024/05/24 18:51:46 by fmorra           ###   ########.fr       */
+/*   Updated: 2024/05/30 11:31:08 by fmorra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,50 +14,86 @@
 
 #include <stdio.h>
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-    static char *next;
-    char        *line;
-    int         daer;
+	static char	*next;
+	char		*line;
+	int			daer;
 
-    line = NULL;
-    if (!next)
-        next = ft_calloc(sizeof(char), (BUFFER_SIZE +1));
-    if (backslashn(next) != ft_strlen(next))
-    {
-        line = ft_strjoin(line, next);
-        next = ft_substr(next, backslashn(next) + 1, BUFFER_SIZE);
-        return (line);
-    }
-    else
-        line = ft_strjoin(line, next);
-    next[0] = '\0';
-    daer = read(fd, next, BUFFER_SIZE);
-    while (backslashn(next) == BUFFER_SIZE && daer == BUFFER_SIZE && daer != -1)
-    {
-        line = ft_strjoin(line, next);
-        next[0] = '\0';
-        daer = read(fd, next, BUFFER_SIZE);
-    }
-    if (daer != 0 && daer != -1)
-        line = ft_strjoin(line, next);
-    next = ft_substr(next, backslashn(next) + 1, BUFFER_SIZE);
-    return (line);
+	if (next && backslashn(next) != ft_strlen(next))
+	{
+		line = ft_strdup(next);
+		next = ft_substr(next, backslashn(next) + 1, BUFFER_SIZE);
+		return (line);
+	}
+	line = ft_strdup(next);
+	free(next);
+	next = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
+	daer = BUFFER_SIZE;
+	while (daer == BUFFER_SIZE && daer != -1)
+	{
+		daer = read(fd, next, BUFFER_SIZE);
+		line = ft_strjoin(line, next);
+		if (backslashn(next) != BUFFER_SIZE)
+			break ;
+	}
+	next = ft_substr(next, backslashn(next) + 1, BUFFER_SIZE);
+	if (ft_strlen(next) == 0 && ft_strlen(line) == 0)
+		return (free(next), free(line), NULL);
+	return (line);
 }
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+char	*ft_strjoin(char *s1, char *s2)
 {
+	char	*res;
 	size_t	i;
+	size_t	j;
 
+	if (!s1 && !s2)
+		return (NULL);
 	i = 0;
-	if (n == 0)
-		return (0);
-	while (s1[i] && s1[i] == s2[i] && i < n - 1)
-		i++;
-	return (s1[i] - s2[i]);
+	j = 0;
+	res = ft_calloc(sizeof(char), (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!res)
+		return (NULL);
+	while (s1 && s1[i])
+		res[j++] = s1[i++];
+	i = 0;
+	while (s2[i] && i <= backslashn(s2))
+		res[j++] = s2[i++];
+	free(s1);
+	return (res);
 }
 
-int main(int argc, char *argv[])
+char	*ft_substr(char *s, unsigned int start, size_t len)
+{
+	char			*str;
+	size_t			i;
+	unsigned int	j;
+
+	if (!s)
+		return (NULL);
+	if (start >= ft_strlen(s))
+	{
+		free(s);
+		return (ft_strdup(""));
+	}
+	if (len > ft_strlen(s) - start)
+		len = ft_strlen(s) - start;
+	str = ft_calloc(len + 1, sizeof(char));
+	i = 0;
+	j = start;
+	while (i < len && s[j])
+	{
+		str[i] = s[j];
+		i++;
+		j++;
+	}
+	free(s);
+	return (str);
+}
+
+/* int main(int argc, char *argv[])
 {
     int     fd;
     char    *line;
@@ -65,7 +101,8 @@ int main(int argc, char *argv[])
     if (argc > 1)
     {
         fd = open(argv[1], O_RDONLY);
-        for (int i = 0; i < 500; i++)
+        line = "";
+        while (line)
         {
             line = get_next_line(fd);
             printf("%s",line);
@@ -73,4 +110,4 @@ int main(int argc, char *argv[])
         }
         close(fd);
     }
-}
+} */
