@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmorra <fmorra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/17 12:38:30 by fmorra            #+#    #+#             */
-/*   Updated: 2024/06/03 13:53:20 by fmorra           ###   ########.fr       */
+/*   Created: 2024/06/03 12:12:12 by fmorra            #+#    #+#             */
+/*   Updated: 2024/06/03 13:54:07 by fmorra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 void	*freenext(char *next)
 {
@@ -108,22 +108,3 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	free(s);
 	return (str);
 }
-
-/* int main(int argc, char *argv[])
-{
-    int     fd;
-    char    *line;
-
-    if (argc > 1)
-    {
-        fd = open(argv[1], O_RDONLY);
-        line = "";
-        while (line)
-        {
-            line = get_next_line(fd);
-            printf("|%s|",line);
-            free(line);
-        }
-        close(fd);
-    }
-} */
