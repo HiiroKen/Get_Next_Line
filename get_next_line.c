@@ -6,7 +6,7 @@
 /*   By: fmorra <fmorra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:38:30 by fmorra            #+#    #+#             */
-/*   Updated: 2024/06/03 10:50:46 by fmorra           ###   ########.fr       */
+/*   Updated: 2024/06/03 11:46:39 by fmorra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,36 +16,36 @@
 
 char	*get_next_line(int fd)
 {
-	static char	*next;
+	static char	*next[1024];
 	char		*line;
 	int			daer;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 1024)
 		return (NULL);
-	if (next && backslashn(next) != ft_strlen(next))
+	if (next[fd] && backslashn(next[fd]) != ft_strlen(next[fd]))
 	{
-		line = ft_strdup(next);
-		next = ft_substr(next, backslashn(next) + 1, BUFFER_SIZE);
+		line = ft_strdup(next[fd]);
+		next[fd] = ft_substr(next[fd], backslashn(next[fd]) + 1, BUFFER_SIZE);
 		return (line);
 	}
-	line = ft_strdup(next);
-	free(next);
-	next = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
+	line = ft_strdup(next[fd]);
+	free(next[fd]);
+	next[fd] = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
 	daer = BUFFER_SIZE;
 	while (daer == BUFFER_SIZE && daer != -1)
 	{
-		daer = read(fd, next, BUFFER_SIZE);
+		daer = read(fd, next[fd], BUFFER_SIZE);
 		if (daer == 0)
 			break;
-		line = ft_strjoin(line, next);
-		if (backslashn(next) != BUFFER_SIZE)
+		line = ft_strjoin(line, next[fd]);
+		if (backslashn(next[fd]) != BUFFER_SIZE)
 			break;
-		free(next);
-		next = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
+		free(next[fd]);
+		next[fd] = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
 	}
-	next = ft_substr(next, backslashn(next) + 1, BUFFER_SIZE);
-	if (ft_strlen(next) == 0 && ft_strlen(line) == 0)
-		return (free(next), free(line), NULL);
+	next[fd] = ft_substr(next[fd], backslashn(next[fd]) + 1, BUFFER_SIZE);
+	if (ft_strlen(next[fd]) == 0 && ft_strlen(line) == 0)
+		return (free(next[fd]), free(line), NULL);
 	return (line);
 }
 
