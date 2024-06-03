@@ -6,7 +6,7 @@
 /*   By: fmorra <fmorra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:38:30 by fmorra            #+#    #+#             */
-/*   Updated: 2024/05/30 11:31:08 by fmorra           ###   ########.fr       */
+/*   Updated: 2024/06/03 10:50:46 by fmorra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	*get_next_line(int fd)
 	char		*line;
 	int			daer;
 
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
 	if (next && backslashn(next) != ft_strlen(next))
 	{
 		line = ft_strdup(next);
@@ -33,9 +35,13 @@ char	*get_next_line(int fd)
 	while (daer == BUFFER_SIZE && daer != -1)
 	{
 		daer = read(fd, next, BUFFER_SIZE);
+		if (daer == 0)
+			break;
 		line = ft_strjoin(line, next);
 		if (backslashn(next) != BUFFER_SIZE)
-			break ;
+			break;
+		free(next);
+		next = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
 	}
 	next = ft_substr(next, backslashn(next) + 1, BUFFER_SIZE);
 	if (ft_strlen(next) == 0 && ft_strlen(line) == 0)
@@ -105,7 +111,7 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
         while (line)
         {
             line = get_next_line(fd);
-            printf("%s",line);
+            printf("|%s|",line);
             free(line);
         }
         close(fd);
