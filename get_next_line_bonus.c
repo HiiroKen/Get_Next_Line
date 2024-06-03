@@ -6,7 +6,7 @@
 /*   By: fmorra <fmorra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 12:12:12 by fmorra            #+#    #+#             */
-/*   Updated: 2024/06/03 13:54:07 by fmorra           ###   ########.fr       */
+/*   Updated: 2024/06/03 17:57:05 by fmorra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	if (start >= ft_strlen(s))
 	{
 		free(s);
-		return (ft_strdup(""));
+		return (NULL);
 	}
 	if (len > ft_strlen(s) - start)
 		len = ft_strlen(s) - start;
